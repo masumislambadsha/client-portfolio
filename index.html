@@ -1,50 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Masum Islam Badsha - Personal Portfolio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Masum Islam Badsha - Personal Portfolio</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS & Alpine.js -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-  <!-- Interactivity: Alpine.js (For Tabs & Filtering) -->
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Plugins: Swiper & MDI Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css">
 
-  <!-- Plugins: Swiper (Testimonials) & MDI Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#ebb884',
-            dark: '#1d1d1d',
-            secondary: '#f8f9f9',
-            muted: '#696969',
-          },
-          fontFamily: { sora: ['Sora', 'sans-serif'] },
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // GLOBAL PRIMARY COLOR: Change this hex code to change the whole site color
+                        primary: {
+                            DEFAULT: '#ebb884',
+                            hover: '#dca773'
+                        },
+                        dark: '#1d1d1d',
+                        secondary: '#f8f9f9',
+                        muted: '#696969',
+                    },
+                    fontFamily: { sora: ['Sora', 'sans-serif'] },
+                }
+            }
         }
-      }
-    }
-  </script>
+    </script>
 
-  <style>
-    body { font-family: 'Sora', sans-serif; color: #1d1d1d; }
-    .nav-sticky { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); color: #1d1d1d !important; }
-    .work-overlay { background: linear-gradient(rgba(235, 184, 132, 0.9), rgba(22, 28, 45, 0.9)); }
-  </style>
+    <style type="text/tailwindcss">
+        @layer components {
+            /* GLOBAL BUTTON STYLE: Impact all primary buttons */
+            .btn-primary {
+                @apply bg-primary text-white px-10 py-4 rounded-full font-bold uppercase text-[10px] tracking-[2px] transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-block cursor-pointer;
+            }
+            /* Section tag style */
+            .section-tag {
+                @apply border border-primary text-primary px-6 py-2 rounded-full uppercase text-[10px] font-bold tracking-widest inline-block mb-5;
+            }
+            /* Oval Skills style */
+            .skill-oval {
+                @apply bg-[#262629] p-10 rounded-[150px] text-center group hover:bg-primary transition-all duration-500 cursor-pointer;
+            }
+        }
+
+        body { font-family: 'Sora', sans-serif; color: #1d1d1d; }
+        .nav-sticky { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); color: #1d1d1d !important; }
+        [x-cloak] { display: none !important; }
+
+        /* Swiper Linear Scroll */
+        .testimonials-slider .swiper-wrapper { transition-timing-function: linear !important; }
+    </style>
 </head>
 
 <body x-data="{ scrolled: false, activeTab: 'about', filter: 'all' }" @scroll.window="scrolled = (window.pageYOffset > 50)">
 
-  <!-- 1. NAVBAR -->
-<nav :class="scrolled ? 'nav-sticky py-3' : 'py-6 text-white'" class="fixed top-0 w-full z-50 transition-all duration-500">
+    <!-- 1. NAVBAR (Price Section Added to links) -->
+ <nav :class="scrolled ? 'nav-sticky py-3' : 'py-6 text-white'" class="fixed top-0 w-full z-50 transition-all duration-500">
     <div class="container mx-auto px-6 flex justify-between items-center">
       <a href="#" class="text-2xl font-bold tracking-tighter" :class="scrolled ? 'text-dark' : 'text-white'">LOGO</a>
 
@@ -71,28 +91,24 @@
     </div>
   </nav>
 
-  <!-- 2. HERO SECTION -->
-  <section id="home" class="relative min-h-screen flex items-center bg-cover bg-center" style="background-image: url('/assesets/89781.jpg');">
-    <div class="absolute inset-0 bg-black/70"></div>
-    <div class="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-      <div class="text-center lg:text-left">
-        <h1 class="text-white text-xl mb-4 font-normal">Hi 🖐 I’m <span id="typed" class="text-primary"></span></h1>
-        <h2 class="text-white text-4xl md:text-6xl font-bold leading-tight mb-6">A Best Digital Product Design</h2>
-        <p class="text-white/70 max-w-lg mb-10 leading-loose">This is just a simple text made for this unique and awesome template, you can replace it with any text.</p>
-        <a href="#work" class="inline-block bg-primary text-white px-10 py-4 rounded-full font-bold uppercase text-xs hover:-translate-y-1 transition-all shadow-lg">View My Works</a>
-      </div>
-
-      <div class="flex justify-center">
-        <div class="relative max-w-md">
-            <!-- Decorative SVG shape restored -->
-            <img src="https://i.ibb.co.com/2Yt8vfSj/afterfocus-1685469859955.jpg" class="rounded-full w-full border-8 border-white/10 shadow-2xl" alt="Masum">
+    <!-- 2. HERO SECTION -->
+    <section id="home" class="relative min-h-screen flex items-center bg-cover bg-center" style="background-image: url('assesets/89781.jpg');">
+        <div class="absolute inset-0 bg-black/70"></div>
+        <div class="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+            <div class="text-center lg:text-left">
+                <h1 class="text-white text-xl mb-4 font-normal">Hi 🖐 I’m <span id="typed" class="text-primary pr-1 border-r-2 border-primary"></span></h1>
+                <h2 class="text-white text-4xl md:text-6xl font-bold leading-tight mb-6">A Best Digital Product Design</h2>
+                <p class="text-white/70 max-w-lg mb-10 leading-loose">This is just a simple text made for this unique and awesome template, you can replace it with any text.</p>
+                <a href="#work" class="btn-primary">view my works</a>
+            </div>
+            <div class="flex justify-center">
+                <img src="https://i.ibb.co.com/2Yt8vfSj/afterfocus-1685469859955.jpg" class="rounded-[100px_40px_100px_40px] w-80 md:w-[450px] border-8 border-white/5 shadow-2xl" alt="Masum">
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 3. ABOUT SECTION (TABS RESTORED) -->
- <section id="about" class="py-24 bg-secondary">
+    <!-- 3. ABOUT SECTION (FULL TABS & CONTENT RESTORED) -->
+    <section id="about" class="py-24 bg-secondary">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <span class="border border-primary text-primary px-6 py-2 rounded-full uppercase text-[10px] font-bold tracking-widest">resume</span>
@@ -397,195 +413,91 @@
 
     </div>
 
-    <!-- Footer Button -->
-    <div class="mt-16 text-center">
-      <a href="all-portfolio.html" class="bg-primary text-white px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-[2px] hover:shadow-xl transition-all duration-300 hover:-translate-y-1 inline-block">See more works</a>
-    </div>
+    </section>
 
-  </div>
-</section>
-
-<section id="pricing" class="py-24 bg-secondary">
-    <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
-            <span class="section-title-tag">Pricing</span>
-            <h2 class="text-4xl font-bold mt-5 text-dark">Pricing Plans</h2>
-        </div>
-        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div class="bg-white p-12 rounded-3xl card-shadow border border-gray-100 text-center hover:border-primary transition">
-                <h4 class="text-lg font-bold mb-2">Basic</h4>
-                <h3 class="text-4xl font-bold text-primary mb-8">$49<span class="text-sm text-muted font-normal">/hr</span></h3>
-                <ul class="space-y-4 mb-10 text-muted text-sm italic"><li>Landing Page</li><li>Responsive Design</li><li>SEO Setup</li></ul>
-                <a href="#" class="btn-primary !px-8">Get Started</a>
-            </div>
-            <div class="bg-dark text-white p-12 rounded-3xl shadow-2xl text-center border-2 border-primary relative overflow-hidden">
-                <div class="bg-primary text-white py-1 px-10 absolute rotate-45 top-6 -right-8 text-[9px] font-bold">BEST VALUE</div>
-                <h4 class="text-lg font-bold mb-2">Business</h4>
-                <h3 class="text-4xl font-bold text-primary mb-8">$99<span class="text-sm text-gray-400 font-normal">/hr</span></h3>
-                <ul class="space-y-4 mb-10 opacity-80 text-sm italic"><li>Full Stack Development</li><li>MERN Integration</li><li>Database Management</li></ul>
-                <a href="#" class="btn-primary !px-8">Get Started</a>
-            </div>
-            <div class="bg-white p-12 rounded-3xl card-shadow border border-gray-100 text-center hover:border-primary transition">
-                <h4 class="text-lg font-bold mb-2">Premium</h4>
-                <h3 class="text-4xl font-bold text-primary mb-8">$149<span class="text-sm text-muted font-normal">/hr</span></h3>
-                <ul class="space-y-4 mb-10 text-muted text-sm italic"><li>Custom Enterprise Solutions</li><li>24/7 Support</li><li>Unlimited Revisions</li></ul>
-                <a href="#" class="btn-primary !px-8">Get Started</a>
+    <!-- 6. SERVICES SECTION -->
+    <section id="services" class="py-24 bg-secondary">
+        <div class="container mx-auto px-6 text-center">
+            <span class="section-tag">Services</span>
+            <h2 class="text-4xl font-bold mb-16">My Expertise</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-12 rounded-2xl shadow-sm hover:shadow-xl transition group">
+                    <img src="https://zoyothemes.com/natia/layout/images/service-icon/01.svg" class="w-12 mx-auto mb-8 transition group-hover:-translate-y-2">
+                    <h4 class="text-xl font-bold mb-4">Web Development</h4>
+                    <p class="text-muted text-sm leading-relaxed mb-8 italic">Creating higher spacing and how people move through a unique journey.</p>
+                    <a href="#" class="uppercase text-[10px] font-bold border-b-2 border-dark pb-1 hover:text-primary transition">Read More</a>
+                </div>
+                <div class="bg-white p-12 rounded-2xl shadow-sm hover:shadow-xl transition group">
+                    <img src="https://zoyothemes.com/natia/layout/images/service-icon/02.svg" class="w-12 mx-auto mb-8 transition group-hover:-translate-y-2">
+                    <h4 class="text-xl font-bold mb-4">MERN Stack</h4>
+                    <p class="text-muted text-sm leading-relaxed mb-8 italic">Building robust full-stack applications with MongoDB, Express, React, and Node.</p>
+                    <a href="#" class="uppercase text-[10px] font-bold border-b-2 border-dark pb-1 hover:text-primary transition">Read More</a>
+                </div>
+                <div class="bg-white p-12 rounded-2xl shadow-sm hover:shadow-xl transition group">
+                    <img src="https://zoyothemes.com/natia/layout/images/service-icon/03.svg" class="w-12 mx-auto mb-8 transition group-hover:-translate-y-2">
+                    <h4 class="text-xl font-bold mb-4">UI/UX Design</h4>
+                    <p class="text-muted text-sm leading-relaxed mb-8 italic">Focusing on clean design principles to enhance user engagement and satisfaction.</p>
+                    <a href="#" class="uppercase text-[10px] font-bold border-b-2 border-dark pb-1 hover:text-primary transition">Read More</a>
+                </div>
             </div>
         </div>
-    </div>
-  </section>
-  <!-- 6. SERVICES SECTION (EXPERTISE RESTORED) -->
-<!-- Services Section -->
-<section id="services" class="py-24 bg-secondary" id="services">
-  <div class="container mx-auto px-4">
+    </section>
 
-    <!-- Section Heading -->
-    <div class="text-center mb-16">
-      <div class="title-section">
-        <span class="border border-primary text-primary px-6 py-2 rounded-full uppercase text-[10px] font-bold tracking-widest inline-block mb-5">Services</span>
-        <h2 class="text-4xl font-bold text-dark capitalize">My Expertise</h2>
-      </div>
-    </div>
-
-    <!-- Services Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- Service Box 1 -->
-      <div class="group p-10 bg-white border border-gray-100 rounded-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative">
-        <div class="mb-8">
-          <img src="https://zoyothemes.com/natia/layout/images/service-icon/01.svg" class="w-12 h-12 object-contain transition-transform duration-500 group-hover:scale-110" alt="Service Icon">
-        </div>
-        <span class="text-muted opacity-70 text-sm block mb-2 font-medium">Product Development</span>
-        <h6 class="text-xl font-bold mb-4">
-          <a href="javascript:void(0)" class="text-dark hover:text-primary transition-colors duration-300">Web Development</a>
-        </h6>
-        <p class="text-muted text-sm leading-relaxed opacity-70 mb-8">
-          Creating a higher spacing and how people move through a unique user journey.
-        </p>
-        <div class="mt-4">
-          <a class="inline-flex items-center text-[12px] font-bold uppercase tracking-widest text-dark group-hover:text-primary transition-colors duration-300 border-b-2 border-transparent group-hover:border-primary pb-1" href="#">
-            Read More
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2 transform transition-transform group-hover:translate-x-1">
-              <path d="M13.922 4.5V11.8125C13.922 11.9244 13.8776 12.0317 13.7985 12.1108C13.7193 12.1899 13.612 12.2344 13.5002 12.2344C13.3883 12.2344 13.281 12.1899 13.2018 12.1108C13.1227 12.0317 13.0783 11.9244 13.0783 11.8125V5.51953L4.79547 13.7953C4.71715 13.8736 4.61092 13.9176 4.50015 13.9176C4.38939 13.9176 4.28316 13.8736 4.20484 13.7953C4.12652 13.717 4.08252 13.6108 4.08252 13.5C4.08252 13.3892 4.12652 13.283 4.20484 13.2047L12.4806 4.92188H6.18765C6.07577 4.92188 5.96846 4.87743 5.88934 4.79831C5.81023 4.71919 5.76578 4.61189 5.76578 4.5C5.76578 4.38811 5.81023 4.28081 5.88934 4.20169C5.96846 4.12257 6.07577 4.07813 6.18765 4.07812H13.5002C13.612 4.07813 13.7193 4.12257 13.7985 4.20169C13.8776 4.28081 13.922 4.38811 13.922 4.5Z" fill="currentColor"></path>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Service Box 2 -->
-      <div class="group p-10 bg-white border border-gray-100 rounded-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative">
-        <div class="mb-8">
-          <img src="https://zoyothemes.com/natia/layout/images/service-icon/02.svg" class="w-12 h-12 object-contain transition-transform duration-500 group-hover:scale-110" alt="Service Icon">
-        </div>
-        <span class="text-muted opacity-70 text-sm block mb-2 font-medium">Product Development</span>
-        <h6 class="text-xl font-bold mb-4 text-dark group-hover:text-primary transition-colors">
-          <a href="javascript:void(0)">Web Development</a>
-        </h6>
-        <p class="text-muted text-sm leading-relaxed opacity-70 mb-8">
-          Creating a higher spacing and how people move through a unique user journey.
-        </p>
-        <div class="mt-4">
-          <a class="inline-flex items-center text-[12px] font-bold uppercase tracking-widest text-dark group-hover:text-primary transition-colors border-b-2 border-transparent group-hover:border-primary pb-1" href="#">
-            Read More
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2 transform transition-transform group-hover:translate-x-1">
-              <path d="M13.922 4.5V11.8125C13.922 11.9244 13.8776 12.0317 13.7985 12.1108C13.7193 12.1899 13.612 12.2344 13.5002 12.2344C13.3883 12.2344 13.281 12.1899 13.2018 12.1108C13.1227 12.0317 13.0783 11.9244 13.0783 11.8125V5.51953L4.79547 13.7953C4.71715 13.8736 4.61092 13.9176 4.50015 13.9176C4.38939 13.9176 4.28316 13.8736 4.20484 13.7953C4.12652 13.717 4.08252 13.6108 4.08252 13.5C4.08252 13.3892 4.12652 13.283 4.20484 13.2047L12.4806 4.92188H6.18765C6.07577 4.92188 5.96846 4.87743 5.88934 4.79831C5.81023 4.71919 5.76578 4.61189 5.76578 4.5C5.76578 4.38811 5.81023 4.28081 5.88934 4.20169C5.96846 4.12257 6.07577 4.07813 6.18765 4.07812H13.5002C13.612 4.07813 13.7193 4.12257 13.7985 4.20169C13.8776 4.28081 13.922 4.38811 13.922 4.5Z" fill="currentColor"></path>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Service Box 3 -->
-      <div class="group p-10 bg-white border border-gray-100 rounded-xl transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative">
-        <div class="mb-8">
-          <img src="https://zoyothemes.com/natia/layout/images/service-icon/03.svg" class="w-12 h-12 object-contain transition-transform duration-500 group-hover:scale-110" alt="Service Icon">
-        </div>
-        <span class="text-muted opacity-70 text-sm block mb-2 font-medium">Product Development</span>
-        <h6 class="text-xl font-bold mb-4 text-dark group-hover:text-primary transition-colors">
-          <a href="javascript:void(0)">Web Development</a>
-        </h6>
-        <p class="text-muted text-sm leading-relaxed opacity-70 mb-8">
-          Creating a higher spacing and how people move through a unique user journey.
-        </p>
-        <div class="mt-4">
-          <a class="inline-flex items-center text-[12px] font-bold uppercase tracking-widest text-dark group-hover:text-primary transition-colors border-b-2 border-transparent group-hover:border-primary pb-1" href="#">
-            Read More
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2 transform transition-transform group-hover:translate-x-1">
-              <path d="M13.922 4.5V11.8125C13.922 11.9244 13.8776 12.0317 13.7985 12.1108C13.7193 12.1899 13.612 12.2344 13.5002 12.2344C13.3883 12.2344 13.281 12.1899 13.2018 12.1108C13.1227 12.0317 13.0783 11.9244 13.0783 11.8125V5.51953L4.79547 13.7953C4.71715 13.8736 4.61092 13.9176 4.50015 13.9176C4.38939 13.9176 4.28316 13.8736 4.20484 13.7953C4.12652 13.717 4.08252 13.6108 4.08252 13.5C4.08252 13.3892 4.12652 13.283 4.20484 13.2047L12.4806 4.92188H6.18765C6.07577 4.92188 5.96846 4.87743 5.88934 4.79831C5.81023 4.71919 5.76578 4.61189 5.76578 4.5C5.76578 4.38811 5.81023 4.28081 5.88934 4.20169C5.96846 4.12257 6.07577 4.07813 6.18765 4.07812H13.5002C13.612 4.07813 13.7193 4.12257 13.7985 4.20169C13.8776 4.28081 13.922 4.38811 13.922 4.5Z" fill="currentColor"></path>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-  <!-- 7. TESTIMONIALS (RESTORED) -->
-<section id="testimonial" class="py-24 bg-white overflow-hidden">
-  <div class="container mx-auto px-6">
-
-    <!-- Section Heading -->
-    <div class="text-center mb-16">
-      <div class="title-section">
-        <span class="border border-primary text-primary px-6 py-2 rounded-full uppercase text-[10px] font-bold tracking-widest inline-block mb-5">testimonial</span>
-        <h2 class="text-4xl font-bold text-dark capitalize">Clients feedback</h2>
-      </div>
-    </div>
-
-    <!-- Slider Container -->
-    <div class="max-w-5xl mx-auto relative px-12">
-
-      <!-- Swiper -->
-      <div class="swiper testimonials-slider">
-        <div class="swiper-wrapper">
-
-          <!-- Slide 1 -->
-          <div class="swiper-slide text-center pb-12">
-            <div class="mb-8">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT_VqaExTJlEVi1Cj-5jdVAcsaffcOs6YIBw&s"
-                   class="w-20 h-20 rounded-full mx-auto shadow-xl border-4 border-white object-cover" alt="Client">
+    <!-- 7. PRICING SECTION (Added to meet requirements) -->
+    <section id="pricing" class="py-24">
+        <div class="container mx-auto px-6 text-center">
+            <span class="section-tag">Pricing</span>
+            <h2 class="text-4xl font-bold mb-16">My Plans</h2>
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="p-12 rounded-3xl border hover:border-primary transition group text-left">
+                    <h4 class="text-lg font-bold mb-2">Basic</h4>
+                    <h3 class="text-4xl font-bold text-primary mb-8">$49<span class="text-sm text-muted font-normal">/hr</span></h3>
+                    <ul class="space-y-4 mb-10 text-sm opacity-70"><li>Landing Page</li><li>Responsive</li><li class="opacity-30 line-through">Custom API</li></ul>
+                    <a href="#" class="btn-primary !px-8">Buy Now</a>
+                </div>
+                <div class="p-12 rounded-3xl bg-dark text-white border-2 border-primary relative overflow-hidden text-left shadow-2xl scale-105">
+                    <div class="bg-primary text-white py-1 px-10 absolute rotate-45 top-6 -right-8 text-[9px] font-bold">BEST VALUE</div>
+                    <h4 class="text-lg font-bold mb-2">Business</h4>
+                    <h3 class="text-4xl font-bold text-primary mb-8">$99<span class="text-sm text-gray-400 font-normal">/hr</span></h3>
+                    <ul class="space-y-4 mb-10 text-sm opacity-80"><li>Full Stack Web</li><li>Database</li><li>Custom API</li></ul>
+                    <a href="#" class="btn-primary !px-8">Get Started</a>
+                </div>
+                <div class="p-12 rounded-3xl border hover:border-primary transition group text-left">
+                    <h4 class="text-lg font-bold mb-2">Premium</h4>
+                    <h3 class="text-4xl font-bold text-primary mb-8">$149<span class="text-sm text-muted font-normal">/hr</span></h3>
+                    <ul class="space-y-4 mb-10 text-sm opacity-70"><li>Enterprise App</li><li>24/7 Support</li><li>Cloud Hosting</li></ul>
+                    <a href="#" class="btn-primary !px-8">Buy Now</a>
+                </div>
             </div>
-            <p class="text-xl md:text-2xl italic leading-relaxed text-dark font-light mb-8 px-4 md:px-10">
-              "I highly recommend hiring developers for your team. As a company that recently brought on several developers, I can attest to the incredible value they bring to our projects."
-            </p>
-            <h5 class="text-lg font-bold text-dark">Robert Beck</h5>
-            <p class="text-primary text-xs font-bold uppercase tracking-widest mt-1">Product Designer</p>
-          </div>
-
-          <!-- Slide 2 -->
-          <div class="swiper-slide text-center pb-12">
-            <div class="mb-8">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT_VqaExTJlEVi1Cj-5jdVAcsaffcOs6YIBw&s"
-                   class="w-20 h-20 rounded-full mx-auto shadow-xl border-4 border-white object-cover" alt="Client">
-            </div>
-            <p class="text-xl md:text-2xl italic leading-relaxed text-dark font-light mb-8 px-4 md:px-10">
-              "Working with Masum was a game changer for our project. The attention to detail and clean MERN stack architecture they provided was outstanding."
-            </p>
-            <h5 class="text-lg font-bold text-dark">Sarah Jenkins</h5>
-            <p class="text-primary text-xs font-bold uppercase tracking-widest mt-1">Technical Lead</p>
-          </div>
-
         </div>
+    </section>
 
-        <!-- Pagination Dots -->
-        <div class="swiper-pagination !-bottom-2"></div>
-      </div>
+    <!-- 8. TESTIMONIALS (Infinite Linear Loop) -->
+    <section id="testimonial" class="py-24 bg-secondary overflow-hidden">
+        <div class="container mx-auto px-6 text-center">
+            <span class="section-tag">testimonial</span>
+            <h2 class="text-4xl font-bold mb-16 text-dark">Clients feedback</h2>
 
-      <!-- Navigation Buttons (Left/Right Arrows) -->
-      <button class="slider-prev absolute top-[40%] -left-4 md:-left-12 z-10 w-14 h-14 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:bg-primary hover:border-primary hover:text-white transition-all duration-300 shadow-sm bg-white">
-        <i class="mdi mdi-arrow-left text-2xl"></i>
-      </button>
-      <button class="slider-next absolute top-[40%] -right-4 md:-right-12 z-10 w-14 h-14 rounded-full border border-gray-100 flex items-center justify-center text-gray-400 hover:bg-primary hover:border-primary hover:text-white transition-all duration-300 shadow-sm bg-white">
-        <i class="mdi mdi-arrow-right text-2xl"></i>
-      </button>
+            <div class="max-w-5xl mx-auto relative px-12">
+                <div class="swiper testimonials-slider">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide px-10">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTT_VqaExTJlEVi1Cj-5jdVAcsaffcOs6YIBw&s" class="w-20 h-20 rounded-full mx-auto mb-8 shadow-xl border-4 border-white">
+                            <p class="text-2xl italic font-light leading-relaxed mb-8 max-w-3xl mx-auto">"I highly recommend hiring developers for your team. As a company that recently brought on several developers, I can attest to the incredible value they bring."</p>
+                            <h5 class="text-lg font-bold uppercase tracking-widest">Robert Beck</h5>
+                            <p class="text-primary text-[10px] font-bold uppercase tracking-[4px]">Product Designer</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Nav Arrows -->
+                <button class="slider-prev absolute top-1/2 -left-4 z-10 -translate-y-1/2 w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition"><i class="mdi mdi-arrow-left text-2xl"></i></button>
+                <button class="slider-next absolute top-1/2 -right-4 z-10 -translate-y-1/2 w-14 h-14 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition"><i class="mdi mdi-arrow-right text-2xl"></i></button>
+            </div>
+        </div>
+    </section>
 
-    </div>
-  </div>
-</section>
-
-  <!-- 8. BLOG SECTION (3 RECENT POSTS RESTORED) -->
-<!-- Blog Section -->
-<section id="blog" class="py-24 bg-secondary">
+    <!-- 9. BLOG SECTION (3 Recent) -->
+   <section id="blog" class="py-24 bg-secondary">
   <div class="container mx-auto px-4">
 
     <!-- Section Heading -->
@@ -805,42 +717,29 @@
   </div>
 </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-  <script>
-    new Typed('#typed', {
-      strings: ['Masu', 'MERN Stack Developer', 'Freelancer'],
-      typeSpeed: 100,
-      backSpeed: 50,
-      loop: true
-    });
 
-    new Swiper(".mySwiper", {
-        loop: true,
-        autoplay: { delay: 3000 },
-        pagination: { el: ".swiper-pagination", clickable: true },
-    });
-  </script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    new Swiper(".testimonials-slider", {
-      loop: true,
-      speed: 1000,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".slider-next",
-        prevEl: ".slider-prev",
-      },
-    });
-  });
-</script>
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        // Typewriter Effect
+        new Typed('#typed', {
+            strings: ['Masu', 'MERN Developer', 'Freelancer'],
+            typeSpeed: 80,
+            backSpeed: 40,
+            loop: true
+        });
 
+        // Testimonial Infinite Scroll (Fixed to Linear Marquee)
+        document.addEventListener('DOMContentLoaded', function () {
+            new Swiper(".testimonials-slider", {
+                loop: true,
+                speed: 8000,
+                allowTouchMove: true,
+                autoplay: { delay: 0, disableOnInteraction: false },
+                navigation: { nextEl: ".slider-next", prevEl: ".slider-prev" }
+            });
+        });
+    </script>
 </body>
 </html>
