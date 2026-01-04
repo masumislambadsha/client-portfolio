@@ -44,21 +44,30 @@
 <body x-data="{ scrolled: false, activeTab: 'about', filter: 'all' }" @scroll.window="scrolled = (window.pageYOffset > 50)">
 
   <!-- 1. NAVBAR -->
-  <nav :class="scrolled ? 'nav-sticky py-3' : 'py-6 text-white'" class="fixed top-0 w-full z-50 transition-all duration-500">
+<nav :class="scrolled ? 'nav-sticky py-3' : 'py-6 text-white'" class="fixed top-0 w-full z-50 transition-all duration-500">
     <div class="container mx-auto px-6 flex justify-between items-center">
       <a href="#" class="text-2xl font-bold tracking-tighter" :class="scrolled ? 'text-dark' : 'text-white'">LOGO</a>
 
-      <div class="hidden lg:flex space-x-7 text-[13px] font-bold uppercase tracking-wider">
+      <div class="hidden lg:flex space-x-7 text-[11px] font-bold uppercase tracking-widest">
         <a href="#home" class="hover:text-primary transition">Home</a>
-        <a href="#about" class="hover:text-primary transition">About Us</a>
-        <a href="#work" class="hover:text-primary transition">Work</a>
+        <a href="#about" class="hover:text-primary transition">About</a>
+        <a href="#work" class="hover:text-primary transition">Portfolio</a>
         <a href="#services" class="hover:text-primary transition">Services</a>
+        <a href="#pricing" class="hover:text-primary transition">Price</a>
         <a href="#testimonial" class="hover:text-primary transition">Testimonial</a>
         <a href="#blog" class="hover:text-primary transition">Blog</a>
         <a href="#contact" class="hover:text-primary transition">Contact</a>
       </div>
 
-      <button class="lg:hidden text-2xl"><i class="mdi mdi-menu"></i></button>
+      <button @click="mobileMenu = !mobileMenu" class="lg:hidden text-2xl"><i class="mdi mdi-menu"></i></button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div x-show="mobileMenu" x-cloak class="lg:hidden bg-white text-dark p-6 space-y-4 shadow-xl border-t font-bold uppercase text-[10px] tracking-widest">
+        <a @click="mobileMenu = false" class="block" href="#home">Home</a>
+        <a @click="mobileMenu = false" class="block" href="#about">About</a>
+        <a @click="mobileMenu = false" class="block" href="#pricing">Price</a>
+        <a @click="mobileMenu = false" class="block" href="#contact">Contact</a>
     </div>
   </nav>
 
@@ -396,6 +405,35 @@
   </div>
 </section>
 
+<section id="pricing" class="py-24 bg-secondary">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <span class="section-title-tag">Pricing</span>
+            <h2 class="text-4xl font-bold mt-5 text-dark">Pricing Plans</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="bg-white p-12 rounded-3xl card-shadow border border-gray-100 text-center hover:border-primary transition">
+                <h4 class="text-lg font-bold mb-2">Basic</h4>
+                <h3 class="text-4xl font-bold text-primary mb-8">$49<span class="text-sm text-muted font-normal">/hr</span></h3>
+                <ul class="space-y-4 mb-10 text-muted text-sm italic"><li>Landing Page</li><li>Responsive Design</li><li>SEO Setup</li></ul>
+                <a href="#" class="btn-primary !px-8">Get Started</a>
+            </div>
+            <div class="bg-dark text-white p-12 rounded-3xl shadow-2xl text-center border-2 border-primary relative overflow-hidden">
+                <div class="bg-primary text-white py-1 px-10 absolute rotate-45 top-6 -right-8 text-[9px] font-bold">BEST VALUE</div>
+                <h4 class="text-lg font-bold mb-2">Business</h4>
+                <h3 class="text-4xl font-bold text-primary mb-8">$99<span class="text-sm text-gray-400 font-normal">/hr</span></h3>
+                <ul class="space-y-4 mb-10 opacity-80 text-sm italic"><li>Full Stack Development</li><li>MERN Integration</li><li>Database Management</li></ul>
+                <a href="#" class="btn-primary !px-8">Get Started</a>
+            </div>
+            <div class="bg-white p-12 rounded-3xl card-shadow border border-gray-100 text-center hover:border-primary transition">
+                <h4 class="text-lg font-bold mb-2">Premium</h4>
+                <h3 class="text-4xl font-bold text-primary mb-8">$149<span class="text-sm text-muted font-normal">/hr</span></h3>
+                <ul class="space-y-4 mb-10 text-muted text-sm italic"><li>Custom Enterprise Solutions</li><li>24/7 Support</li><li>Unlimited Revisions</li></ul>
+                <a href="#" class="btn-primary !px-8">Get Started</a>
+            </div>
+        </div>
+    </div>
+  </section>
   <!-- 6. SERVICES SECTION (EXPERTISE RESTORED) -->
 <!-- Services Section -->
 <section id="services" class="py-24 bg-secondary" id="services">
