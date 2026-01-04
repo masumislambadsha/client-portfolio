@@ -5,14 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Masum Islam Badsha - Personal Portfolio</title>
 
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS & Alpine.js -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-    <!-- Plugins: Swiper & MDI Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.2.96/css/materialdesignicons.min.css">
 
@@ -21,7 +16,6 @@
             theme: {
                 extend: {
                     colors: {
-                        // GLOBAL PRIMARY COLOR: Change this hex code to change the whole site color
                         primary: {
                             DEFAULT: '#ebb884',
                             hover: '#dca773'
@@ -38,15 +32,12 @@
 
     <style type="text/tailwindcss">
         @layer components {
-            /* GLOBAL BUTTON STYLE: Impact all primary buttons */
             .btn-primary {
                 @apply bg-primary text-white px-10 py-4 rounded-full font-bold uppercase text-[10px] tracking-[2px] transition-all duration-300 hover:shadow-xl hover:-translate-y-1 inline-block cursor-pointer;
             }
-            /* Section tag style */
             .section-tag {
                 @apply border border-primary text-primary px-6 py-2 rounded-full uppercase text-[10px] font-bold tracking-widest inline-block mb-5;
             }
-            /* Oval Skills style */
             .skill-oval {
                 @apply bg-[#262629] p-10 rounded-[150px] text-center group hover:bg-primary transition-all duration-500 cursor-pointer;
             }
@@ -55,48 +46,83 @@
         body { font-family: 'Sora', sans-serif; color: #1d1d1d; }
         .nav-sticky { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); color: #1d1d1d !important; }
         [x-cloak] { display: none !important; }
-
-        /* Swiper Linear Scroll */
         .testimonials-slider .swiper-wrapper { transition-timing-function: linear !important; }
     </style>
 </head>
 
-<body x-data="{ scrolled: false, activeTab: 'about', filter: 'all' }" @scroll.window="scrolled = (window.pageYOffset > 50)">
+<body x-data="{
+  scrolled: false,
+  activeTab: 'about',
+  filter: 'all',
+  mobileMenu: false
+}" @scroll.window="scrolled = (window.pageYOffset > 50)">
 
-    <!-- 1. NAVBAR (Price Section Added to links) -->
- <nav :class="scrolled ? 'nav-sticky py-3' : 'py-6 text-white'" class="fixed top-0 w-full z-50 transition-all duration-500">
-    <div class="container mx-auto px-6 flex justify-between items-center">
-      <a href="#" class="text-2xl font-bold tracking-tighter" :class="scrolled ? 'text-dark' : 'text-white'">LOGO</a>
+  <!-- navbar -->
+<nav :class="scrolled ? 'nav-sticky py-3' : 'py-6 text-white'"
+     class="fixed top-0 w-full z-50 transition-all duration-500">
+  <div class="container mx-auto px-6 flex justify-between items-center">
+    <!-- Logo -->
+    <a href="#"
+       class="text-2xl font-bold tracking-tighter"
+       :class="scrolled ? 'text-dark' : 'text-white'">
+      LOGO
+    </a>
 
-      <div class="hidden lg:flex space-x-7 text-[11px] font-bold uppercase tracking-widest">
-        <a href="#home" class="hover:text-primary transition">Home</a>
-        <a href="#about" class="hover:text-primary transition">About</a>
-        <a href="#work" class="hover:text-primary transition">Portfolio</a>
-        <a href="#services" class="hover:text-primary transition">Services</a>
-        <a href="#pricing" class="hover:text-primary transition">Price</a>
-        <a href="#testimonial" class="hover:text-primary transition">Testimonial</a>
-        <a href="#blog" class="hover:text-primary transition">Blog</a>
-        <a href="#contact" class="hover:text-primary transition">Contact</a>
-      </div>
-
-      <button @click="mobileMenu = !mobileMenu" class="lg:hidden text-2xl"><i class="mdi mdi-menu"></i></button>
+    <!-- Desktop Menu -->
+    <div class="hidden lg:flex space-x-7 text-[11px] font-bold uppercase tracking-widest">
+      <a href="#home" class="hover:text-primary transition">Home</a>
+      <a href="#about" class="hover:text-primary transition">About</a>
+      <a href="#work" class="hover:text-primary transition">Portfolio</a>
+      <a href="#services" class="hover:text-primary transition">Services</a>
+      <a href="#pricing" class="hover:text-primary transition">Price</a>
+      <a href="#testimonial" class="hover:text-primary transition">Testimonial</a>
+      <a href="#blog" class="hover:text-primary transition">Blog</a>
+      <a href="#contact" class="hover:text-primary transition">Contact</a>
     </div>
 
-    <!-- Mobile Menu -->
-    <div x-show="mobileMenu" x-cloak class="lg:hidden bg-white text-dark p-6 space-y-4 shadow-xl border-t font-bold uppercase text-[10px] tracking-widest">
-        <a @click="mobileMenu = false" class="block" href="#home">Home</a>
-        <a @click="mobileMenu = false" class="block" href="#about">About</a>
-        <a @click="mobileMenu = false" class="block" href="#pricing">Price</a>
-        <a @click="mobileMenu = false" class="block" href="#contact">Contact</a>
-    </div>
-  </nav>
+    <!-- Hamburger Button (Mobile) -->
+    <button @click="mobileMenu = !mobileMenu"
+            class="lg:hidden text-3xl focus:outline-none">
+      <i x-show="!mobileMenu" class="mdi mdi-menu"></i>
+      <i x-show="mobileMenu" class="mdi mdi-close"></i>
+    </button>
+  </div>
 
-    <!-- 2. HERO SECTION -->
-    <section id="home" class="relative min-h-screen flex items-center bg-cover bg-center" style="background-image: url('assesets/89781.jpg');">
+  <!-- Mobile Menu -->
+  <div x-show="mobileMenu"
+       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter-start="opacity-0 -translate-y-full"
+       x-transition:enter-end="opacity-100 translate-y-0"
+       x-transition:leave="transition ease-in duration-200"
+       x-transition:leave-start="opacity-100 translate-y-0"
+       x-transition:leave-end="opacity-0 -translate-y-full"
+       x-cloak
+       class="absolute top-full left-0 right-0 bg-white shadow-2xl lg:hidden">
+    <div class="p-8 space-y-6 text-center font-bold uppercase tracking-widest text-dark">
+      <a @click="mobileMenu = false" href="#home" class="block hover:text-primary transition">Home</a>
+      <a @click="mobileMenu = false" href="#about" class="block hover:text-primary transition">About</a>
+      <a @click="mobileMenu = false" href="#work" class="block hover:text-primary transition">Portfolio</a>
+      <a @click="mobileMenu = false" href="#services" class="block hover:text-primary transition">Services</a>
+      <a @click="mobileMenu = false" href="#pricing" class="block hover:text-primary transition">Price</a>
+      <a @click="mobileMenu = false" href="#testimonial" class="block hover:text-primary transition">Testimonial</a>
+      <a @click="mobileMenu = false" href="#blog" class="block hover:text-primary transition">Blog</a>
+      <a @click="mobileMenu = false" href="#contact" class="block hover:text-primary transition">Contact</a>
+    </div>
+  </div>
+
+  <!-- Optional: Dark overlay when menu is open -->
+  <div x-show="mobileMenu"
+       @click="mobileMenu = false"
+       class="fixed inset-0 bg-black/50 z-40 lg:hidden"
+       x-cloak></div>
+</nav>
+
+    <!--  hero  -->
+    <section id="home" class="pt-20 lg:pt-0 relative min-h-screen flex items-center bg-cover bg-center" style="background-image: url('assets/89781.jpg');">
         <div class="absolute inset-0 bg-black/70"></div>
         <div class="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
             <div class="text-center lg:text-left">
-                <h1 class="text-white text-xl mb-4 font-normal">Hi 🖐 I’m <span id="typed" class="text-primary pr-1 border-r-2 border-primary"></span></h1>
+                <h1 class="text-white text-xl mb-4 font-normal">Hi 🖐 I'm <span id="typed" class="text-primary pr-1 border-r-2 border-primary"></span></h1>
                 <h2 class="text-white text-4xl md:text-6xl font-bold leading-tight mb-6">A Best Digital Product Design</h2>
                 <p class="text-white/70 max-w-lg mb-10 leading-loose">This is just a simple text made for this unique and awesome template, you can replace it with any text.</p>
                 <a href="#work" class="btn-primary">view my works</a>
@@ -107,7 +133,7 @@
         </div>
     </section>
 
-    <!-- 3. ABOUT SECTION (FULL TABS & CONTENT RESTORED) -->
+    <!-- about -->
     <section id="about" class="py-24 bg-secondary">
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
@@ -130,7 +156,7 @@
                 <div x-show="activeTab === 'about'" x-transition:enter="transition duration-500 opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" class="grid md:grid-cols-2 gap-12 items-center">
                     <div>
                         <h4 class="text-2xl font-bold mb-4">Jr Software Developer</h4>
-                        <p class="text-muted leading-relaxed mb-8 text-[15px]">Hi, I’m Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.Let's collaborate and bring your ideas to life!</p>
+                        <p class="text-muted leading-relaxed mb-8 text-[15px]">Hi, I'm Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.Let's collaborate and bring your ideas to life!</p>
                         <ul class="space-y-4">
                             <li class="flex text-[15px]"><span class="w-32 text-muted font-medium">Name</span> <span class="mr-4 text-primary">:</span> <strong>Masum Islam Badsh</strong></li>
                             <li class="flex text-[15px]"><span class="w-32 text-muted font-medium">Nationality</span> <span class="mr-4 text-primary">:</span> <strong>Bangladeshi</strong></li>
@@ -152,7 +178,7 @@
                             <span class="text-primary font-bold text-sm block mb-2 tracking-widest"><i class="mdi mdi-calculator"></i> <span x-text="year"></span></span>
                             <h4 class="text-xl font-bold mb-1 text-dark">Junior Web Developer</h4>
                             <p class="text-xs text-muted font-semibold mb-4 uppercase tracking-wider">Web Developer</p>
-                            <p class="text-muted text-sm leading-loose">Hi, I’m Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.Let's collaborate and bring your ideas to life!</p>
+                            <p class="text-muted text-sm leading-loose">Hi, I'm Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.Let's collaborate and bring your ideas to life!</p>
                         </div>
                     </template>
                 </div>
@@ -164,28 +190,28 @@
                         <span class="text-primary font-bold text-sm block mb-2 tracking-widest"><i class="mdi mdi-calculator"></i> 2022 - 2024</span>
                         <h4 class="text-xl font-bold mb-1 text-dark">Master of Computer Science</h4>
                         <p class="text-xs text-muted font-semibold mb-4 uppercase tracking-wider">Puring University</p>
-                        <p class="text-muted text-sm leading-loose">Hi, I’m Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.</p>
+                        <p class="text-muted text-sm leading-loose">Hi, I'm Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.</p>
                     </div>
                     <!-- Bachelor -->
                     <div class="p-8 bg-white rounded-xl border border-gray-100 shadow-sm">
                         <span class="text-primary font-bold text-sm block mb-2 tracking-widest"><i class="mdi mdi-calculator"></i> 2020 - 2022</span>
                         <h4 class="text-xl font-bold mb-1 text-dark">Bechelor in Science</h4>
                         <p class="text-xs text-muted font-semibold mb-4 uppercase tracking-wider">Alka University</p>
-                        <p class="text-muted text-sm leading-loose">Hi, I’m Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.</p>
+                        <p class="text-muted text-sm leading-loose">Hi, I'm Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.</p>
                     </div>
                     <!-- Diploma -->
                     <div class="p-8 bg-white rounded-xl border border-gray-100 shadow-sm">
                         <span class="text-primary font-bold text-sm block mb-2 tracking-widest"><i class="mdi mdi-calculator"></i> 2019 - 2020</span>
                         <h4 class="text-xl font-bold mb-1 text-dark">Diploma in Computer</h4>
                         <p class="text-xs text-muted font-semibold mb-4 uppercase tracking-wider">Technical College</p>
-                        <p class="text-muted text-sm leading-loose">Hi, I’m Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.</p>
+                        <p class="text-muted text-sm leading-loose">Hi, I'm Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.</p>
                     </div>
                     <!-- Web Course -->
                     <div class="p-8 bg-white rounded-xl border border-gray-100 shadow-sm">
                         <span class="text-primary font-bold text-sm block mb-2 tracking-widest"><i class="mdi mdi-calculator"></i> 2017 - 2019</span>
                         <h4 class="text-xl font-bold mb-1 text-dark">Web Designer Course</h4>
                         <p class="text-xs text-muted font-semibold mb-4 uppercase tracking-wider">Alliska Center</p>
-                        <p class="text-muted text-sm leading-loose">Hi, I’m Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.</p>
+                        <p class="text-muted text-sm leading-loose">Hi, I'm Masun Islam Badsha, a passionate MERN Stack Developer. dedicated to building clean, scalable, and user focused web applications.</p>
                     </div>
                 </div>
 
@@ -223,7 +249,7 @@
                     </div>
                     <!-- Router -->
                     <div class="bg-[#262629] p-10 rounded-[150px] text-center group hover:bg-primary transition-all duration-500 cursor-pointer">
-                        <img src="https://raw.githubusercontent.com/remix-run/react-router/main/packages/react-router/logo-light.png" class="w-12 mx-auto grayscale group-hover:grayscale-0 transition mb-6">
+                        <img src="/assesets/rr_logo_dark.svg" class="w-12 mx-auto grayscale group-hover:grayscale-0 transition mb-6">
                         <h4 class="text-white text-3xl font-bold">79%</h4>
                         <p class="text-gray-400 group-hover:text-white text-sm uppercase mt-2">React Router</p>
                     </div>
@@ -250,7 +276,7 @@
         </div>
     </section>
 
-  <!-- 4. MY LEARNING CURVE SECTION (RESTORED) -->
+  <!-- extra -->
   <section class="relative py-24 overflow-hidden bg-dark text-white">
     <div class="container mx-auto px-6 relative z-10">
       <div class="text-center mb-12">
@@ -279,11 +305,10 @@
     <div class="absolute inset-0 opacity-10 bg-[url('https://zoyothemes.com/natia/layout/images/home/cross_pattern.svg')]"></div>
   </section>
 
-  <!-- 5. PORTFOLIO SECTION (FILTERING & BUTTONS RESTORED) -->
+  <!-- projects -->
 <section id="work" class="py-24 bg-white" x-data="{ filter: 'all' }">
   <div class="max-w-5xl mx-auto px-4">
 
-    <!-- Section Heading -->
     <div class="text-center mb-16">
       <div class="title-section">
         <span class="border border-primary text-primary px-6 py-2 rounded-full uppercase text-[10px] font-bold tracking-widest inline-block mb-5">Portfolio</span>
@@ -291,7 +316,7 @@
       </div>
     </div>
 
-    <!-- Filter Buttons -->
+    <!-- filter btn -->
     <div class="flex flex-wrap justify-center gap-6 mb-12 text-sm font-bold uppercase tracking-widest">
       <button @click="filter = 'all'" :class="filter === 'all' ? 'text-primary border-b-2 border-primary' : 'text-dark'" class="pb-2 transition-all duration-300">All</button>
       <button @click="filter = 'branding'" :class="filter === 'branding' ? 'text-primary border-b-2 border-primary' : 'text-dark'" class="pb-2 transition-all duration-300">Branding</button>
@@ -300,10 +325,9 @@
       <button @click="filter = 'development'" :class="filter === 'development' ? 'text-primary border-b-2 border-primary' : 'text-dark'" class="pb-2 transition-all duration-300">Development</button>
     </div>
 
-    <!-- Portfolio Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-      <!-- Card 1: Style Decor (Branding) -->
+      <!-- card 1 -->
       <div x-show="filter === 'all' || filter === 'branding'"
            x-transition:enter="transition ease-out duration-500"
            x-transition:enter-start="opacity-0 scale-95"
@@ -321,7 +345,7 @@
         </div>
       </div>
 
-      <!-- Card 2: Zap Shift (Designing) -->
+      <!-- card 2 -->
       <div x-show="filter === 'all' || filter === 'designing'"
            x-transition:enter="transition ease-out duration-500"
            x-transition:enter-start="opacity-0 scale-95"
@@ -339,7 +363,7 @@
         </div>
       </div>
 
-      <!-- Card 3: Style Decor (Branding) -->
+      <!-- card 3 -->
       <div x-show="filter === 'all' || filter === 'branding'"
            x-transition:enter="transition ease-out duration-500"
            x-transition:enter-start="opacity-0 scale-95"
@@ -357,7 +381,7 @@
         </div>
       </div>
 
-      <!-- Card 4: Style Decor (Branding) -->
+      <!-- card 4 -->
       <div x-show="filter === 'all' || filter === 'branding'"
            x-transition:enter="transition ease-out duration-500"
            x-transition:enter-start="opacity-0 scale-95"
@@ -375,7 +399,7 @@
         </div>
       </div>
 
-      <!-- Card 5: Zap Shift (Designing) -->
+      <!-- card 5 -->
       <div x-show="filter === 'all' || filter === 'designing'"
            x-transition:enter="transition ease-out duration-500"
            x-transition:enter-start="opacity-0 scale-95"
@@ -393,7 +417,7 @@
         </div>
       </div>
 
-      <!-- Card 6: Zap Shift (Designing) -->
+      <!-- card 6 -->
       <div x-show="filter === 'all' || filter === 'designing'"
            x-transition:enter="transition ease-out duration-500"
            x-transition:enter-start="opacity-0 scale-95"
@@ -415,7 +439,7 @@
 
     </section>
 
-    <!-- 6. SERVICES SECTION -->
+    <!-- service -->
     <section id="services" class="py-24 bg-secondary">
         <div class="container mx-auto px-6 text-center">
             <span class="section-tag">Services</span>
@@ -443,7 +467,7 @@
         </div>
     </section>
 
-    <!-- 7. PRICING SECTION (Added to meet requirements) -->
+    <!-- pricing -->
     <section id="pricing" class="py-24">
         <div class="container mx-auto px-6 text-center">
             <span class="section-tag">Pricing</span>
@@ -472,7 +496,7 @@
         </div>
     </section>
 
-    <!-- 8. TESTIMONIALS (Infinite Linear Loop) -->
+    <!-- review  -->
     <section id="testimonial" class="py-24 bg-secondary overflow-hidden">
         <div class="container mx-auto px-6 text-center">
             <span class="section-tag">testimonial</span>
@@ -496,7 +520,7 @@
         </div>
     </section>
 
-    <!-- 9. BLOG SECTION (3 Recent) -->
+    <!-- blog -->
    <section id="blog" class="py-24 bg-secondary">
   <div class="container mx-auto px-4">
 
@@ -581,12 +605,11 @@
   </div>
 </section>
 
- <!-- Contact Start -->
+ <!-- contact -->
 <section class="py-24 bg-white" id="contact">
   <div class="container mx-auto px-4">
     <div class="flex flex-wrap -mx-4">
 
-      <!-- Contact Info (Left Side) -->
       <div class="w-full lg:w-5/12 px-4 mb-12 lg:mb-0">
         <div class="contact-left">
           <div class="mb-14">
@@ -595,7 +618,7 @@
           </div>
 
           <div class="space-y-8">
-            <!-- Phone -->
+
             <div class="flex items-center gap-5 group">
               <div class="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:border-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone">
@@ -608,7 +631,7 @@
               </div>
             </div>
 
-            <!-- Email -->
+
             <div class="flex items-center gap-5 group">
               <div class="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:border-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send">
@@ -621,8 +644,6 @@
                 <a href="mailto:mohammadbadsha468@gmail.com" class="text-muted text-sm hover:text-primary transition-colors">mohammadbadsha468@gmail.com</a>
               </div>
             </div>
-
-            <!-- Address -->
             <div class="flex items-center gap-5 group">
               <div class="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:border-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin">
@@ -639,7 +660,7 @@
         </div>
       </div>
 
-      <!-- Contact Form (Right Side) -->
+
       <div class="w-full lg:w-7/12 px-4">
         <div class="mt-8 lg:mt-0">
           <form id="contact-form" class="space-y-6">
@@ -673,14 +694,14 @@
   </div>
 </section>
 
-<!-- Footer Start -->
+<!-- footer -->
 <footer class="bg-[#1a1a1a] text-white overflow-hidden">
   <div class="container mx-auto px-4">
-    <!-- Top Footer -->
+
     <div class="py-24 border-b border-white/5">
       <div class="flex flex-wrap -mx-4">
 
-        <!-- Address Column -->
+
         <div class="w-full md:w-4/12 lg:w-4/12 px-4 mb-12 md:mb-0">
           <h6 class="text-xl font-bold mb-8">Address</h6>
           <div class="text-gray-400 text-[15px] leading-relaxed font-light">
@@ -688,7 +709,6 @@
           </div>
         </div>
 
-        <!-- Hello Column -->
         <div class="w-full md:w-4/12 lg:w-3/12 px-4 mb-12 md:mb-0 lg:ml-[8.33%]">
           <h6 class="text-xl font-bold mb-8">Say Hello</h6>
           <div class="space-y-3">
@@ -701,7 +721,6 @@
           </div>
         </div>
 
-        <!-- Social Column -->
         <div class="w-full md:w-2/12 px-4">
           <h6 class="text-xl font-bold mb-8">Social</h6>
           <ul class="space-y-3 text-[13px] font-bold uppercase tracking-widest">
@@ -718,11 +737,10 @@
 </footer>
 
 
-    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script>
-        // Typewriter Effect
+
         new Typed('#typed', {
             strings: ['Masu', 'MERN Developer', 'Freelancer'],
             typeSpeed: 80,
@@ -730,7 +748,7 @@
             loop: true
         });
 
-        // Testimonial Infinite Scroll (Fixed to Linear Marquee)
+
         document.addEventListener('DOMContentLoaded', function () {
             new Swiper(".testimonials-slider", {
                 loop: true,
