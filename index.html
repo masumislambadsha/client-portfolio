@@ -767,11 +767,9 @@
   </div>
 </footer>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
   <script>
-    // Typed JS Initialization
     new Typed('#typed', {
       strings: ['Masu', 'MERN Stack Developer', 'Freelancer'],
       typeSpeed: 100,
@@ -779,33 +777,12 @@
       loop: true
     });
 
-    // Swiper Initialization
     new Swiper(".mySwiper", {
         loop: true,
         autoplay: { delay: 3000 },
         pagination: { el: ".swiper-pagination", clickable: true },
     });
   </script>
-  <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    new Swiper(".testimonials-slider", {
-      loop: true,
-      speed: 1000,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      navigation: {
-        nextEl: ".slider-next",
-        prevEl: ".slider-prev",
-      },
-    });
-  });
-</script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     new Swiper(".testimonials-slider", {
